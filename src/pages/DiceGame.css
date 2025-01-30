@@ -1,0 +1,82 @@
+.dice-game-container {
+  text-align: center;
+  margin-top: 3rem;
+  font-family: Arial, sans-serif;
+}
+
+.dice-game-input {
+  margin-bottom: 1rem;
+}
+
+.dice-game-input label {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.dice-game-input input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 50px;
+  text-align: center;
+}
+
+button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #282c34;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.dice-animation {
+  font-size: 3rem;
+  margin: 1rem 0;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.dice-game-result {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  color: #4caf50;
+}
+
+.dice-game-dice {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.dice-game-history {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  text-align: left;
+  display: inline-block;
+}
+
+.dice-game-history ul {
+  list-style: none;
+  padding: 0;
+}
+
+.dice-game-history li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}

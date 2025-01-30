@@ -1,15 +1,17 @@
 .navbar {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Menu pionowe */
   align-items: center;
-  gap: 1rem; /* Odstęp między linkami */
-  margin-top: 1rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 .navbar a {
   text-decoration: none;
   color: #282c34;
   font-size: 1.2rem;
+  font-weight: bold;
+  transition: color 0.2s ease;
 }
 
 .navbar a:hover {

@@ -1,0 +1,65 @@
+.slot-machine-container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 3rem;
+}
+
+.reels {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.reels.winner .reel {
+  animation: blink 0.3s infinite alternate; /* Miganie przy wygranej */
+}
+
+@keyframes blink {
+  0% {
+    background-color: #282c34;
+    color: white;
+  }
+  100% {
+    background-color: #4caf50;
+    color: black;
+  }
+}
+
+.reel {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: #282c34;
+  color: white;
+  border-radius: 10px;
+  border: 2px solid #61dafb;
+  overflow: hidden;
+}
+
+button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #282c34;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 1.5rem;
+  font-size: 1.5rem;
+  color: #4caf50;
+}

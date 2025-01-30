@@ -1,12 +1,14 @@
 .navbar-container {
   text-align: center;
   margin-top: 2rem;
+  width: 100vw;
 }
 
 .navbar-balance {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: chocolate;
 }
 
 .navbar-title {

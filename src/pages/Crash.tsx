@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useBalance } from "../context/BalanceContext";
+import { Link } from "react-router-dom"; // Import Link do nawigacji
 import "./Crash.css";
 
 const Crash: React.FC = () => {
@@ -61,6 +62,10 @@ const Crash: React.FC = () => {
 
   return (
     <div className="crash-game">
+      {/* Przyciski powrotu */}
+      <Link to="/" className="back-button">
+        ← Powrót do strony głównej
+      </Link>
       <h1>Gra Crash</h1>
       <h2 className={`multiplier ${isRunning ? "running" : ""}`}>
         {multiplier.toFixed(2)}x
@@ -85,7 +90,6 @@ const Crash: React.FC = () => {
           </li>
         ))}
       </ul>
-      <p>Saldo: ${balance}</p>
     </div>
   );
 };

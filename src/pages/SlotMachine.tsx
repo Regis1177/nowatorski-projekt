@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useBalance } from "../context/BalanceContext"; // Import kontekstu salda
+import { Link } from "react-router-dom"; // Import Link do nawigacji
 import "./SlotMachine.css";
 
 const symbols = ["🍒", "🍋", "⭐", "🍉", "🔔", "7️⃣"]; // Symbole na bębnach
@@ -57,6 +58,10 @@ const SlotMachine: React.FC = () => {
 
   return (
     <div className="slot-machine-container">
+      {/* Przyciski powrotu */}
+      <Link to="/" className="back-button">
+        ← Powrót do strony głównej
+      </Link>
       <h1>Jednoręki Bandyta</h1>
       <div className={`reels ${message === "Jackpot! 🎉" ? "winner" : ""}`}>
         {reels.map((symbol, index) => (

@@ -18,11 +18,9 @@ const NavBar: React.FC = () => {
         <>
           <h1 className="navbar-title">Witamy w Kasynie!</h1>
           <p className="navbar-subtitle">
-            Wybierz jedną z gier z menu nawigacyjnego powyżej, aby rozpocząć
-            zabawę.
+            Wybierz jedną z gier z menu nawigacyjnego powyżej, aby rozpocząć.
           </p>
           <nav className="navbar">
-            <Link to="/">Home</Link>
             <Link to="/crash">Crash</Link>
             <Link to="/dice-game">Gra w Kości</Link>
             <Link to="/slot-machine">Slot Machine</Link>

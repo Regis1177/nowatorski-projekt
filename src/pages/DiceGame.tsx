@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import hooka do nawigacji
 import { useBalance } from "../context/BalanceContext"; // Import globalnego salda
 import "./DiceGame.css";
 
@@ -9,6 +10,7 @@ const DiceGame: React.FC = () => {
   const [resultMessage, setResultMessage] = useState<string | null>(null); // Komunikat
   const [isRolling, setIsRolling] = useState(false); // Status animacji rzutu
   const [history, setHistory] = useState<string[]>([]); // Historia wyników
+  const navigate = useNavigate(); // Hook do nawigacji
 
   // Obsługa zmiany wartości w input
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +64,11 @@ const DiceGame: React.FC = () => {
 
   return (
     <div className="dice-game-container">
+      {/* Przycisk powrotu */}
+      <button className="back-to-home" onClick={() => navigate("/")}>
+        ← Powrót do strony głównej
+      </button>
+
       <h1>Gra w Kości</h1>
       <div className="dice-game-input">
         <label htmlFor="guess">Wybierz liczbę (1-6):</label>
@@ -82,15 +89,14 @@ const DiceGame: React.FC = () => {
       {isRolling && <div className="dice-animation">🎲</div>}
 
       {resultMessage && <div className="dice-game-result">{resultMessage}</div>}
-
+      <br></br>
       {diceResult !== null && !isRolling && (
         <div className="dice-game-dice">
-          <p>
+          <p className="x">
             Wynik rzutu: <strong>{diceResult}</strong>
           </p>
         </div>
       )}
-
       <div className="dice-game-history">
         <h2>Historia wyników:</h2>
         <ul>

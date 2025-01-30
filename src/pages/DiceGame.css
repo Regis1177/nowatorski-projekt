@@ -65,7 +65,6 @@ button:disabled {
 }
 
 .dice-game-history {
-  margin-top: 2rem;
   font-size: 1.2rem;
   text-align: left;
   display: inline-block;
@@ -74,9 +73,29 @@ button:disabled {
 .dice-game-history ul {
   list-style: none;
   padding: 0;
+  color: chocolate;
 }
 
 .dice-game-history li {
   margin: 0.5rem 0;
   font-size: 1rem;
+}
+.back-to-home {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #61dafb;
+  background-color: #282c34;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.back-to-home:hover {
+  background-color: #3b3f46;
+}
+.x {
+  color: aqua;
 }

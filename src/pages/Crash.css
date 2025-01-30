@@ -37,13 +37,13 @@
 
 .result-message {
   font-size: 1.5rem;
-  color: #ff6347; /* Czerwony na przegraną */
+  color: whitesmoke;
   font-weight: bold;
   margin-top: 1rem;
 }
 
 .result-message.success {
-  color: green; /* Zielony na wygraną */
+  color: whitesmoke;
 }
 
 ul {
@@ -64,4 +64,20 @@ ul li.win {
 ul li.lose {
   color: red;
   font-weight: bold;
+}
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #61dafb;
+  background-color: #282c34;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #3b3f46;
 }

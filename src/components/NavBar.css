@@ -1,19 +1,39 @@
+.navbar-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.navbar-balance {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.navbar-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.navbar-subtitle {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-bottom: 2rem;
+}
+
 .navbar {
   display: flex;
-  flex-direction: column; /* Menu pionowe */
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin-top: 1.5rem;
 }
 
 .navbar a {
   text-decoration: none;
-  color: #282c34;
+  color: #61dafb;
   font-size: 1.2rem;
-  font-weight: bold;
-  transition: color 0.2s ease;
 }
 
 .navbar a:hover {
-  color: #61dafb;
+  color: #21a1f1;
 }

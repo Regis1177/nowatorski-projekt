@@ -1,14 +1,22 @@
 import React, { useState } from "react";
+import { useBalance } from "../context/BalanceContext"; // Import kontekstu salda
 import "./SlotMachine.css";
 
 const symbols = ["🍒", "🍋", "⭐", "🍉", "🔔", "7️⃣"]; // Symbole na bębnach
 
 const SlotMachine: React.FC = () => {
+  const { balance, setBalance } = useBalance(); // Użycie globalnego salda
   const [reels, setReels] = useState<string[]>(["🍒", "🍋", "⭐"]); // Początkowe symbole
   const [isSpinning, setIsSpinning] = useState(false); // Status kręcenia
   const [message, setMessage] = useState<string | null>(null); // Wynik gry
 
   const spinReels = () => {
+    if (balance < 50) {
+      setMessage("Masz za mało środków, aby zagrać!");
+      return;
+    }
+
+    setBalance((prev) => prev - 50); // Odejmij koszt obrotu
     setIsSpinning(true);
     setMessage(null);
 
@@ -37,7 +45,13 @@ const SlotMachine: React.FC = () => {
       // Sprawdź wygraną
       const isWinner =
         newReels[0] === newReels[1] && newReels[1] === newReels[2];
-      setMessage(isWinner ? "Jackpot! 🎉" : "Spróbuj ponownie!");
+      if (isWinner) {
+        const prize = 500; // Kwota wygranej
+        setBalance((prev) => prev + prize);
+        setMessage(`Jackpot! 🎉 Wygrałeś $${prize}!`);
+      } else {
+        setMessage("Spróbuj ponownie!");
+      }
     }, 3000); // Kręci przez 3 sekundy
   };
 

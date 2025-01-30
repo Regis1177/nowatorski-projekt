@@ -1,11 +1,13 @@
 import React from "react";
-import NavBar from "../components/NavBar";
+import "./Home.css";
 
 const Home: React.FC = () => {
   return (
-    <div style={{ textAlign: "center", marginTop: "2rem" }}>
-      <h1>Witamy w kasynie!</h1>
-      <NavBar />
+    <div className="home-container">
+      <h1>Witamy w Kasynie!</h1>
+      <p>
+        Wybierz jedną z gier z menu nawigacyjnego powyżej, aby rozpocząć zabawę.
+      </p>
     </div>
   );
 };

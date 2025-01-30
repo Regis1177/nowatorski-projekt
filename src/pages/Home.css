@@ -1,10 +1,20 @@
-/* tutaj wycentrowałem zawartość */
 .home-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 50px); /* Odejmujemy miejsce na NavBar */
   text-align: center;
+  gap: 1rem;
+}
+
+.home-container h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.home-container p {
+  font-size: 1rem;
+  margin: 0;
+  color: #aaa;
 }

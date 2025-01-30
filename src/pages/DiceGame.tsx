@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useBalance } from "../context/BalanceContext"; // Import globalnego salda
 import "./DiceGame.css";
 
 const DiceGame: React.FC = () => {
+  const { balance, setBalance } = useBalance(); // Użycie kontekstu dla salda
   const [userGuess, setUserGuess] = useState<number | null>(null); // Wybrana liczba
   const [diceResult, setDiceResult] = useState<number | null>(null); // Wynik rzutu
   const [resultMessage, setResultMessage] = useState<string | null>(null); // Komunikat
@@ -23,6 +25,14 @@ const DiceGame: React.FC = () => {
       return;
     }
 
+    if (balance < 20) {
+      setResultMessage("Masz za mało środków, aby zagrać!");
+      return;
+    }
+
+    // Odejmij koszt gry
+    setBalance((prev) => prev - 20);
+
     // Rozpocznij animację rzutu
     setIsRolling(true);
 
@@ -30,19 +40,21 @@ const DiceGame: React.FC = () => {
       const diceRoll = Math.floor(Math.random() * 6) + 1; // Losowanie liczby 1-6
       setDiceResult(diceRoll);
 
-      const success = diceRoll === userGuess;
-      const message = success
-        ? "Brawo! Zgadłeś!"
-        : `Przegrałeś! Wynik to ${diceRoll}.`;
-      setResultMessage(message);
-
-      // Zaktualizuj historię wyników
-      setHistory((prev) => [
-        `Twój wybór: ${userGuess}, Wynik: ${diceRoll} – ${
-          success ? "Wygrana" : "Przegrana"
-        }`,
-        ...prev.slice(0, 4), // Przechowuj maksymalnie 5 wyników
-      ]);
+      if (diceRoll === userGuess) {
+        const winnings = 100; // Wygrana kwota
+        setBalance((prev) => prev + winnings);
+        setResultMessage(`Brawo! Zgadłeś i wygrywasz $${winnings}!`);
+        setHistory((prev) => [
+          `Twój wybór: ${userGuess}, Wynik: ${diceRoll} – Wygrana`,
+          ...prev.slice(0, 4),
+        ]);
+      } else {
+        setResultMessage(`Przegrałeś! Wynik to ${diceRoll}.`);
+        setHistory((prev) => [
+          `Twój wybór: ${userGuess}, Wynik: ${diceRoll} – Przegrana`,
+          ...prev.slice(0, 4),
+        ]);
+      }
 
       setIsRolling(false); // Zakończ animację
     }, 1000); // Czas trwania animacji

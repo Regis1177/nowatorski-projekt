@@ -1,69 +1,91 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useBalance } from "../context/BalanceContext";
 import "./Crash.css";
 
 const Crash: React.FC = () => {
-  const [multiplier, setMultiplier] = useState(1.0); // Aktualny mnożnik
-  const [isRunning, setIsRunning] = useState(false); // Czy gra jest w toku
-  const [crashValue, setCrashValue] = useState(0); // Wartość crashowania
-  const [result, setResult] = useState<string | null>(null); // Wynik gry
-  const [history, setHistory] = useState<string[]>([]); // Historia wyników
+  const { balance, setBalance } = useBalance();
+  const [multiplier, setMultiplier] = useState<number>(1);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [history, setHistory] = useState<
+    { multiplier: number; result: string }[]
+  >([]);
+  const [resultMessage, setResultMessage] = useState<string>("");
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startGame = () => {
+    if (isRunning || balance < 100) return;
+
     setIsRunning(true);
-    setResult(null);
-    setMultiplier(1.0);
-    setCrashValue(Math.random() * 5 + 1); // Losowe crashowanie (1.0x - 6.0x)
+    setBalance((prev) => prev - 100); // Odejmij stawkę
+    setMultiplier(1);
+    setResultMessage("");
+
+    let currentMultiplier = 1;
+
+    intervalRef.current = setInterval(() => {
+      currentMultiplier += 0.1; // Szybszy wzrost mnożnika
+      setMultiplier(currentMultiplier);
+
+      if (Math.random() > 0.97) {
+        clearInterval(intervalRef.current as NodeJS.Timeout);
+        intervalRef.current = null;
+        setIsRunning(false);
+        setHistory((prev) => [
+          { multiplier: currentMultiplier, result: "Przegrana" },
+          ...prev,
+        ]);
+        setResultMessage("Przegrana!");
+      }
+    }, 100); // Szybsze tempo (100 ms)
   };
 
   const cashOut = () => {
-    if (!isRunning) return;
+    if (!isRunning || !intervalRef.current) return;
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+
+    const payout = Math.round(100 * multiplier);
+    setBalance((prev) => prev + payout);
+    setHistory((prev) => [{ multiplier, result: "Wygrana" }, ...prev]);
     setIsRunning(false);
-    const winMessage = `Wynik: ${multiplier.toFixed(2)}x - Wygrana`;
-    setResult(winMessage);
-    setHistory((prev) => [winMessage, ...prev]); // Dodaj wynik do historii
+    setResultMessage("Wygrana! Gratulacje!");
   };
 
   useEffect(() => {
-    if (!isRunning) return;
-
-    const interval = setInterval(() => {
-      setMultiplier((prev) => {
-        const next = prev + 0.01;
-        if (next >= crashValue) {
-          // Gra crashuje
-          clearInterval(interval);
-          setIsRunning(false);
-          const loseMessage = `Wynik: ${next.toFixed(2)}x - Przegrana`;
-          setResult(loseMessage);
-          setHistory((prev) => [loseMessage, ...prev]); // Dodaj wynik do historii
-        }
-        return next;
-      });
-    }, 50); // Aktualizacja co 50ms
-
-    return () => clearInterval(interval);
-  }, [isRunning, crashValue]);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
 
   return (
-    <div className="crash-container">
+    <div className="crash-game">
       <h1>Gra Crash</h1>
-      <div className="crash-multiplier">
-        <span>{multiplier.toFixed(2)}x</span>
+      <h2 className={`multiplier ${isRunning ? "running" : ""}`}>
+        {multiplier.toFixed(2)}x
+      </h2>
+      {resultMessage && <p className="result-message">{resultMessage}</p>}
+      <div className="actions">
+        <button onClick={startGame} disabled={isRunning || balance < 100}>
+          Start
+        </button>
+        <button onClick={cashOut} disabled={!isRunning}>
+          Cash Out
+        </button>
       </div>
-      {!isRunning ? (
-        <button onClick={startGame}>Start</button>
-      ) : (
-        <button onClick={cashOut}>Wypłać</button>
-      )}
-      {result && <div className="crash-result">{result}</div>}
-      <div className="crash-history">
-        <h2>Historia wyników</h2>
-        <ul>
-          {history.map((entry, index) => (
-            <li key={index}>{entry}</li>
-          ))}
-        </ul>
-      </div>
+      <h3>Historia wyników</h3>
+      <ul>
+        {history.map((entry, index) => (
+          <li
+            key={index}
+            className={entry.result === "Wygrana" ? "win" : "lose"}
+          >
+            {entry.multiplier.toFixed(2)}x - {entry.result}
+          </li>
+        ))}
+      </ul>
+      <p>Saldo: ${balance}</p>
     </div>
   );
 };
